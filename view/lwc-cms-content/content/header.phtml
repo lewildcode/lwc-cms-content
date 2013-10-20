@@ -1,5 +1,5 @@
 <header>
-    <h<?php echo $header->getWeight(); ?>><?php echo $header->getText(); ?></h<?php echo $header->getWeight(); ?>>
+    <<?php echo $tag; ?>><?php echo $header->getText(); ?></<?php echo $tag; ?>>
     <?php if($byline = $header->getByline()) : ?>
         <span class="byline"><?php echo $this->escapehtml($byline); ?></span>
     <?php endif; ?>
