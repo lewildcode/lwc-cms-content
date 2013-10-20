@@ -30,11 +30,13 @@ class Header
 
     /**
      *
-     * @param integer $weight
+     * @param integer $weight OPTIONAL
      */
-    public function __construct($weight)
+    public function __construct($weight = null)
     {
-        $this->setWeight($weight);
+        if($weight) {
+            $this->setWeight($weight);
+        }
     }
 
     /**

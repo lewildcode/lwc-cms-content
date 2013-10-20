@@ -1,5 +1,14 @@
 <?php
 return array(
+    'service_manager' => array(
+        'aliases' => array(
+            'LwcCmsContent\DbAdapter' => 'dbAdapter'
+        ),
+        'factories' => array(
+            'LwcCmsContent\Table\Content' => 'LwcCmsContent\Table\ContentTableFactory',
+            'LwcCmsContent\Service\Content' => 'LwcCmsContent\Service\ContentServiceFactory'
+        )
+    ),
     'view_helpers' => array(
         'invokables' => array(
             // basic view helpers

@@ -43,10 +43,13 @@ abstract class AbstractContentEntity implements ContentEntityInterface
     /**
      *
      * @param integer $weight
+     *            OPTIONAL
      */
-    public function __construct($weight)
+    public function __construct($weight = null)
     {
-        $this->setWeight($weight);
+        if ($weight) {
+            $this->setWeight($weight);
+        }
     }
 
     /**
@@ -81,6 +84,7 @@ abstract class AbstractContentEntity implements ContentEntityInterface
 
     /**
      * (non-PHPdoc)
+     *
      * @see \LwcCmsContent\Model\ContentEntityInterface::getPosition()
      */
     public function getPosition()
@@ -90,6 +94,7 @@ abstract class AbstractContentEntity implements ContentEntityInterface
 
     /**
      * (non-PHPdoc)
+     *
      * @see \LwcCmsContent\Model\ContentEntityInterface::setPosition()
      */
     public function setPosition($position)
