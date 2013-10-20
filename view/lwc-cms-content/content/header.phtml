@@ -1,0 +1,6 @@
+<header>
+    <h<?php echo $header->getWeight(); ?>><?php echo $header->getText(); ?></h<?php echo $header->getWeight(); ?>>
+    <?php if($byline = $header->getByline()) : ?>
+        <span class="byline"><?php echo $this->escapehtml($byline); ?></span>
+    <?php endif; ?>
+</header>
