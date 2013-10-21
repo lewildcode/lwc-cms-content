@@ -1,0 +1,21 @@
+CREATE TABLE `cms_content` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `row_id` int(11) unsigned NOT NULL,
+  `type_id` varchar(30) NOT NULL,
+  `position` smallint(4) DEFAULT NULL,
+  `visible` tinyint(1) unsigned DEFAULT '1',
+  `weight` tinyint(2) NOT NULL,
+  `header_text` varchar(100) DEFAULT NULL,
+  `header_weight` tinyint(1) unsigned DEFAULT NULL,
+  `header_byline` varchar(255) DEFAULT NULL,
+  `header_link` varchar(100) DEFAULT NULL,
+  `bodycopy` text,
+  `image_path` varchar(100) DEFAULT NULL,
+  `image_title` varchar(100) DEFAULT NULL,
+  `image_link` varchar(100) DEFAULT NULL,
+  `image_class` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `row_id` (`row_id`),
+  KEY `type_id` (`type_id`),
+  CONSTRAINT `cms_content_ibfk_1` FOREIGN KEY (`row_id`) REFERENCES `cms_row` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

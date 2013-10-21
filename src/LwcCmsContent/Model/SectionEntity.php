@@ -23,6 +23,15 @@ class SectionEntity extends AbstractContentEntity implements ImageAwareInterface
 
     /**
      * (non-PHPdoc)
+     * @see \LwcCmsContent\Model\ContentEntityInterface::getTypeId()
+     */
+    public function getTypeId()
+    {
+        return 'lwc_section';
+    }
+
+    /**
+     * (non-PHPdoc)
      *
      * @see \LwcCmsContent\Model\Component\HeaderAwareInterface::setHeader()
      */

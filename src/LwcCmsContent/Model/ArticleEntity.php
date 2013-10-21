@@ -23,6 +23,15 @@ class ArticleEntity extends AbstractContentEntity implements ImageAwareInterface
 
     /**
      * (non-PHPdoc)
+     * @see \LwcCmsContent\Model\ContentEntityInterface::getTypeId()
+     */
+    public function getTypeId()
+    {
+        return 'lwc_article';
+    }
+
+    /**
+     * (non-PHPdoc)
      *
      * @see \LwcCmsContent\Model\Component\HeaderAwareInterface::setHeader()
      */

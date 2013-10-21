@@ -51,4 +51,9 @@ interface ContentEntityInterface
      * @param string $bodycopy
      */
     public function setBodycopy($bodycopy);
+
+    /**
+     * @return string
+     */
+    public function getTypeId();
 }
