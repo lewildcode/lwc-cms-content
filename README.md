@@ -8,6 +8,18 @@ Add the repository to your composer.json:
         {
             "type": "package",
             "package": {
+                "name": "lwc/LwcCmsPage",
+                "version": "1.0.0",
+                "source": {
+                    "url": "http://github.com/lewildcode/LwcCmsPage",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "lwc/LwcCmsContent",
                 "version": "1.0.0",
                 "source": {
@@ -19,9 +31,10 @@ Add the repository to your composer.json:
         }
     ],
 
-then add the package to the require block
+then add the page & content package to the require block
 
     "require": {
+        "lwc/LwcCmsPage": "1.*", /* if not added yet */
         "lwc/LwcCmsContent": "1.*"
     }
 
