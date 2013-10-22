@@ -1,5 +1,9 @@
 <section class="<?php echo $section->getWeight()?>u">
-    <?php echo $this->contentHeader($section); ?>
-    <?php echo $this->contentImage($section); ?>
-    <?php echo $this->contentBodycopy($section); ?>
+    <?php if($section->getHeaderText()) : ?>
+        <?php echo $this->contentHeader($section); ?>
+    <?php endif; ?>
+    <?php if($section->getImagePath()) : ?>
+        <?php echo $this->contentImage($section); ?>
+    <?php endif; ?>
+    <p><?php echo $section->getBodycopy(); ?></p>
 </section>

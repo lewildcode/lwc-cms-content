@@ -2,9 +2,10 @@
 namespace LwcCmsContent\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use LwcCmsContent\Model\SectionEntity;
+use LwcCmsContent\Type\Section as SectionEntity;
+use LwcCmsContent\Model\ContentEntityInterface;
 
-class Section extends AbstractHelper
+class Section extends AbstractHelper implements RendererInterface
 {
 
     /**
@@ -21,11 +22,11 @@ class Section extends AbstractHelper
      * @param SectionEntity $section
      * @return string
      */
-    public function __invoke(SectionEntity $section)
+    public function __invoke(ContentEntityInterface $content)
     {
         $viewModel = $this->getViewModel();
         return $this->view->render($viewModel, array(
-            'section' => $section
+            'section' => $content
         ));
     }
 }

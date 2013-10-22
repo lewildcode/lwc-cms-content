@@ -1,22 +1,23 @@
 <?php
 namespace LwcCmsContent\Service;
 
-use LwcCmsContent\Table\ContentTable;
 use LwcCmsPage\Entity\RowEntityInterface;
-use LwcCmsContent\Model\ContentEntityHydrator;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Adapter\Adapter;
+use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class ContentService
 {
 
     /**
      *
-     * @var ContentTable
+     * @var array
      */
-    protected $table;
+    protected $gateways = array();
 
     /**
      *
-     * @var ContentEntityHydrator
+     * @var HydratorInterface
      */
     protected $hydrator;
 
@@ -25,19 +26,6 @@ class ContentService
      * @var array
      */
     protected $types = array();
-
-    /**
-     *
-     * @param ContentTable $table
-     * @param ContentEntityHydrator $hydrator
-     * @param array $types
-     */
-    public function __construct(ContentTable $table, ContentEntityHydrator $hydrator, array $types = array())
-    {
-        $this->setTable($table);
-        $this->setHydrator($hydrator);
-        $this->setTypes($types);
-    }
 
     /**
      *
@@ -69,7 +57,7 @@ class ContentService
         if (! $this->hasType($identifier)) {
             return false;
         }
-        return $this->types[$identifier];
+        return $this->types[$identifier]['class_name'];
     }
 
     /**
@@ -80,8 +68,8 @@ class ContentService
     public function setTypes(array $types)
     {
         $this->types = array();
-        foreach ($types as $identifier => $className) {
-            $this->addType($identifier, $className);
+        foreach ($types as $identifier => $specs) {
+            $this->addType($identifier, $specs);
         }
         return $this;
     }
@@ -89,38 +77,42 @@ class ContentService
     /**
      *
      * @param string $identifier
-     * @param string $className
+     * @param array $specs
      * @return \LwcCmsContent\Service\ContentService
      */
-    public function addType($identifier, $className)
+    public function addType($identifier, array $specs)
     {
-        $this->types[trim($identifier)] = trim($className);
+        $this->types[trim($identifier)] = $specs;
         return $this;
     }
 
     /**
      *
-     * @return \LwcCmsContent\Table\ContentTable
+     * @param string $name
+     * @return TableGateway
      */
-    public function getTable()
+    public function getTable($name)
     {
-        return $this->table;
+        if (! isset($this->gateways[$name])) {
+            return false;
+        }
+        return $this->gateways[$name];
     }
 
     /**
      *
-     * @param ContentTable $table
+     * @param TableGateway $table
      * @return \LwcCmsContent\Service\ContentService
      */
-    public function setTable(ContentTable $table)
+    public function addTable(TableGateway $table)
     {
-        $this->table = $table;
+        $this->gateways[$table->getTable()] = $table;
         return $this;
     }
 
     /**
      *
-     * @return \LwcCmsContent\Model\ContentEntityHydrator
+     * @return \Zend\Stdlib\Hydrator\HydratorInterface
      */
     public function getHydrator()
     {
@@ -129,13 +121,49 @@ class ContentService
 
     /**
      *
-     * @param ContentEntityHydrator $hydrator
+     * @param HydratorInterface $hydrator
      * @return \LwcCmsContent\Service\ContentService
      */
-    public function setHydrator(ContentEntityHydrator $hydrator)
+    public function setHydrator(HydratorInterface $hydrator)
     {
         $this->hydrator = $hydrator;
         return $this;
+    }
+
+    /**
+     *
+     * @param string $type
+     * @return string
+     */
+    protected function getTypeTableName($type)
+    {
+        return 'cms_content_' . $type;
+    }
+
+    /**
+     *
+     * @param string $type
+     * @param Adapter $dbAdapter
+     * @return \Zend\Db\TableGateway\TableGateway
+     */
+    protected function getTypeTableGateway($type, Adapter $dbAdapter)
+    {
+        $tableName = $this->getTypeTableName($type);
+        return new TableGateway($tableName, $dbAdapter);
+    }
+
+    /**
+     *
+     * @param \ArrayObject $cms
+     * @param \ArrayObject|false $typeData
+     * @return array
+     */
+    protected function getContentArray(\ArrayObject $cms, $typeData)
+    {
+        if (! $typeData instanceof \ArrayObject) {
+            return $cms->getArrayCopy();
+        }
+        return array_merge($cms->getArrayCopy(), $typeData->getArrayCopy());
     }
 
     /**
@@ -145,18 +173,24 @@ class ContentService
      */
     public function getContentsForRow(RowEntityInterface $row)
     {
-        $dataset = $this->getTable()->getContentsByRowId($row->getId());
+        $cms = $this->getTable('cms_content');
+        $dbAdapter = $cms->getAdapter();
+
         $contents = array();
-
         $hydrator = $this->getHydrator();
-
-        foreach ($dataset as $arrayObject) {
-            $identifier = $arrayObject['type_id'];
-            $className = $this->getTypeClassName($identifier);
+        foreach ($cms->getContentsByRowId($row->getId()) as $arrayObject) {
+            $type = $arrayObject['type_id'];
+            $className = $this->getTypeClassName($type);
             if ($className === false) {
-                throw new \Exception('Could not resolve content type: ' . $identifier);
+                throw new \Exception('Could not resolve content type: ' . $type);
             }
-            $contents[] = $hydrator->hydrate($arrayObject->getArrayCopy(), new $className());
+
+            $tableGateway = $this->getTypeTableGateway($type, $dbAdapter);
+            $this->addTable($tableGateway);
+
+            $type = $tableGateway->select('content_id = ' . (int) $arrayObject['id'])->current();
+            $contentArray = $this->getContentArray($arrayObject, $type);
+            $contents[] = $hydrator->hydrate($contentArray, new $className());
         }
         return $contents;
     }

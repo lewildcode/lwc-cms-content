@@ -5,14 +5,47 @@ interface HeaderAwareInterface
 {
 
     /**
-     *
-     * @param Header $header
+     * @param string $text
      */
-    public function setHeader(Header $header);
+    public function setHeaderText($text);
 
     /**
      *
-     * @return Header
+     * @return string
      */
-    public function getHeader();
+    public function getHeaderText();
+
+    /**
+     *
+     * @param integer $weight
+     */
+    public function setHeaderWeight($weight);
+
+    /**
+     *
+     * @return integer
+    */
+    public function getHeaderWeight();
+
+    /**
+     * @param string $byline
+     */
+    public function setHeaderByline($byline);
+
+    /**
+     *
+     * @return string
+    */
+    public function getHeaderByline();
+
+    /**
+     * @param string $link
+     */
+    public function setHeaderLink($link);
+
+    /**
+     *
+     * @return string
+    */
+    public function getHeaderLink();
 }

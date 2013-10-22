@@ -3,7 +3,6 @@ namespace LwcCmsContent\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use LwcCmsContent\Model\Component\HeaderAwareInterface;
-use LwcCmsContent\Model\Component\Header as ContentHeader;
 
 class Header extends AbstractHelper
 {
@@ -25,21 +24,19 @@ class Header extends AbstractHelper
     public function __invoke(HeaderAwareInterface $content)
     {
         $viewModel = $this->getViewModel();
-        $header = $content->getHeader();
-
         return $this->view->render($viewModel, array(
-            'header' => $header,
-            'tag' => $this->getTag($header)
+            'header' => $content->getHeader(),
+            'tag' => $this->getTag($content)
         ));
     }
 
     /**
      *
-     * @param ContentHeader $header
+     * @param HeaderAwareInterface $header
      * @return string
      */
-    public function getTag(ContentHeader $header)
+    public function getTag(HeaderAwareInterface $header)
     {
-        return 'h' . $header->getWeight();
+        return 'h' . $header->getHeaderWeight();
     }
 }

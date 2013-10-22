@@ -1,10 +1,10 @@
 <article class="<?php echo $article->getWeight()?>u">
-    <?php if($article->getHeader()->getText()) : ?>
+    <?php if($article->getHeaderText()) : ?>
         <?php echo $this->contentHeader($article); ?>
     <?php endif; ?>
-    <?php if($article->getImage()->getPath()) : ?>
+    <?php if($article->getImagePath()) : ?>
         <?php echo $this->contentImage($article); ?>
     <?php endif; ?>
-    <?php echo $this->contentBodycopy($article); ?>
+    <p><?php echo $article->getBodycopy(); ?></p>
 </article>
 

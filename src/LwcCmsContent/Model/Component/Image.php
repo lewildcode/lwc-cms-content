@@ -24,15 +24,13 @@ class Image
 
     /**
      *
-     * @var array
+     * @var string
      */
-    protected $classes = array(
-        'image'
-    );
+    protected $classes;
 
     /**
      *
-     * @return array
+     * @return string
      */
     public function getClasses()
     {
@@ -41,16 +39,12 @@ class Image
 
     /**
      *
-     * @param array $classes
+     * @param string $classes
      * @return \LwcCmsContent\Model\Component\Image
      */
-    public function setClasses(array $classes)
+    public function setClasses($classes)
     {
-        $this->classes = array();
-
-        foreach ($classes as $class) {
-            $this->addClass($class);
-        }
+        $this->classes = trim($classes);
         return $this;
     }
 
@@ -61,7 +55,7 @@ class Image
      */
     public function addClass($class)
     {
-        $this->classes[] = trim($class);
+        $this->classes .= ' ' . trim($class);
         return $this;
     }
 

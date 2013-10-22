@@ -2,9 +2,10 @@
 namespace LwcCmsContent\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use LwcCmsContent\Model\ArticleEntity;
+use LwcCmsContent\Type\Article as ArticleEntity;
+use LwcCmsContent\Model\ContentEntityInterface;
 
-class Article extends AbstractHelper
+class Article extends AbstractHelper implements RendererInterface
 {
 
     /**
@@ -17,15 +18,15 @@ class Article extends AbstractHelper
     }
 
     /**
+     * (non-PHPdoc)
      *
-     * @param ArticleEntity $article
-     * @return string
+     * @see \LwcCmsContent\View\Helper\RendererInterface::__invoke()
      */
-    public function __invoke(ArticleEntity $article)
+    public function __invoke(ContentEntityInterface $content)
     {
         $viewModel = $this->getViewModel();
         return $this->view->render($viewModel, array(
-            'article' => $article
+            'article' => $content
         ));
     }
 }

@@ -19,6 +19,9 @@ return array(
             // core content type view helpers
             'contentArticle' => 'LwcCmsContent\View\Helper\Article',
             'contentSection' => 'LwcCmsContent\View\Helper\Section'
+        ),
+        'factories' => array(
+            'contentRenderer' => 'LwcCmsContent\View\Helper\RendererFactory'
         )
     ),
     'view_manager' => array(

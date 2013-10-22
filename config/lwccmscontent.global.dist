@@ -1,0 +1,20 @@
+<?php
+return array(
+    'lwccmscontent' => array(
+        'contenttable' => 'cms_content',
+        'types' => array(
+            'lwc_bodycopy' => array(
+                'class_name' => 'LwcCmsContent\Type\Bodycopy',
+                'view_helper' => 'contentBodycopy'
+            ),
+            'lwc_article' => array(
+                'class_name' => 'LwcCmsContent\Type\Article',
+                'view_helper' => 'contentArticle'
+            ),
+            'lwc_section' => array(
+                'class_name' => 'LwcCmsContent\Type\Section',
+                'view_helper' => 'contentSection'
+            )
+        )
+    )
+);

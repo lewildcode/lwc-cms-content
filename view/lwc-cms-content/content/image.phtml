@@ -1,9 +1,9 @@
 <?php if($link = $image->getLink()) : ?>
-<a href="<?php echo $link; ?>" class="<?php echo join(' ', $image->getClasses()); ?>">
+<a href="<?php echo $link; ?>" class="<?php echo $image->getClasses(); ?>">
     <img src="<?php echo $image->getPath(); ?>" alt="<?php echo $image->getTitle(); ?>" title="<?php echo $image->getTitle(); ?>" />
 </a>
 <?php else : ?>
-    <img src="<?php echo $image->getPath(); ?>" class="<?php echo join(' ', $image->getClasses()); ?>"
+    <img src="<?php echo $image->getPath(); ?>" class="<?php echo $image->getClasses(); ?>"
         alt="<?php echo $image->getTitle(); ?>"
         title="<?php echo $image->getTitle(); ?>" />
 <?php endif; ?>

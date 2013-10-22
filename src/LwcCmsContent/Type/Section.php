@@ -1,14 +1,16 @@
 <?php
-namespace LwcCmsContent\Model;
+namespace LwcCmsContent\Type;
 
-class BodycopyEntity extends AbstractContentEntity
+class Section extends Article
 {
+
     /**
      * (non-PHPdoc)
+     *
      * @see \LwcCmsContent\Model\ContentEntityInterface::getTypeId()
      */
     public function getTypeId()
     {
-        return 'lwc_bodycopy';
+        return 'lwc_section';
     }
 }

@@ -4,7 +4,7 @@ namespace LwcCmsContent\View\Helper;
 use Zend\View\Helper\AbstractHelper;
 use LwcCmsContent\Model\ContentEntityInterface;
 
-class Bodycopy extends AbstractHelper
+class Bodycopy extends AbstractHelper implements RendererInterface
 {
 
     /**
