@@ -79,4 +79,9 @@ interface ContentEntityInterface
      * @param boolean $visible
      */
     public function setVisible($visible);
+
+    /**
+     * @return array
+     */
+    public function getArrayCopy();
 }

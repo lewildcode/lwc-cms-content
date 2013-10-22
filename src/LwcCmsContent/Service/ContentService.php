@@ -6,6 +6,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use LwcCmsContent\Model\ContentEntityInterface;
+use LwcCmsContent\Model\AbstractContentEntity;
 
 class ContentService
 {
@@ -169,13 +170,22 @@ class ContentService
 
     /**
      *
+     * @return \Zend\Db\Adapter\AdapterInterface
+     */
+    protected function getCmsAdapter()
+    {
+        return $this->getTable('cms_content')->getAdapter();
+    }
+
+    /**
+     *
      * @param RowEntityInterface $row
      * @return \Zend\Db\ResultSet\ResultSet
      */
     public function getContentsForRow(RowEntityInterface $row)
     {
         $cms = $this->getTable('cms_content');
-        $dbAdapter = $cms->getAdapter();
+        $dbAdapter = $this->getCmsAdapter();
 
         $contents = array();
         $hydrator = $this->getHydrator();
@@ -198,20 +208,44 @@ class ContentService
 
     /**
      *
+     * @param integer $id
+     * @return ContentEntityInterface
+     */
+    public function getContentById($id)
+    {
+        $table = $this->getTable('cms_content');
+        // TODO join
+        return $table->select('id = ' . (int) $id)->current();
+    }
+
+    /**
+     *
+     * @param \ArrayObject $arrayObject
+     * @return boolean|AbstractContentEntity
+     */
+    public function getContentByCmsObject(\ArrayObject $arrayObject)
+    {
+        $type = $arrayObject['type_id'];
+        if(!$this->hasType($type)) {
+            return false;
+        }
+        $cmsId = $arrayObject['id'];
+        $table = $this->getTypeTableGateway($type, $this->getCmsAdapter());
+        $typedContent = $table->select('content_id = ' . $cmsId)->current();
+        $contentArray = $this->getContentArray($arrayObject, $typedContent);
+        $className = $this->getTypeClassName($type);
+        return $this->getHydrator()->hydrate($contentArray, new $className());
+    }
+
+    /**
+     *
      * @param ContentEntityInterface $content
      * @return integer
      */
     public function save(ContentEntityInterface $content)
     {
         $table = $this->getTable('cms_content');
-        $data = array(
-            'row_id' => $content->getRowId(),
-            'type_id' => $content->getTypeId(),
-            'position' => $content->getPosition(),
-            'visible' => $content->getVisible(),
-            'weight' => $content->getWeight(),
-            'bodycopy' => $content->getBodycopy()
-        );
+        $data = $content->getArrayCopy();
         if ($id = $content->getId()) {
             return $table->update($data, 'id = ' . (int) $id);
         }

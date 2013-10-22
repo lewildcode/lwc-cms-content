@@ -14,6 +14,15 @@ return array(
                             'specs' => array()
                         )
                     )
+                ),
+                'lwccmscontent_update' => array(
+                    'options' => array(
+                        'route' => 'update content <id> --specs=',
+                        'defaults' => array(
+                            'controller' => 'LwcCmsContent\Controller\Cli',
+                            'action' => 'update'
+                        )
+                    )
                 )
             )
         )

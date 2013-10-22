@@ -43,4 +43,29 @@ class CliController extends AbstractActionController
 
         $service->save($instance);
     }
+
+    public function updateAction()
+    {
+        $service = $this->getContentService();
+        $cmsObject = $service->getContentById($this->params('id'));
+
+        // content not found
+        if(!$cmsObject) {
+            return $this->notFoundAction();
+        }
+
+        // valid json?
+        try{
+            $specs = Json::decode($this->params('specs'), Json::TYPE_ARRAY);
+        } catch(\Exception $e) {
+            $viewModel = new ConsoleModel();
+            $viewModel->setResult('JSON decoding failed.');
+            return $viewModel;
+        }
+
+        $instance = $service->getContentByCmsObject($cmsObject);
+        $service->getHydrator()->hydrate($specs, $instance);
+
+        $service->save($instance);
+    }
 }

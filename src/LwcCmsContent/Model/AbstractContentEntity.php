@@ -101,6 +101,9 @@ abstract class AbstractContentEntity implements ContentEntityInterface
      */
     public function getPosition()
     {
+        if($this->position === 0) {
+            $this->position = null;
+        }
         return $this->position;
     }
 
@@ -164,6 +167,9 @@ abstract class AbstractContentEntity implements ContentEntityInterface
      */
     public function getBodycopy()
     {
+        if($this->bodycopy === '') {
+            $this->bodycopy = null;
+        }
         return $this->bodycopy;
     }
 
@@ -176,5 +182,21 @@ abstract class AbstractContentEntity implements ContentEntityInterface
     {
         $this->bodycopy = trim($bodycopy);
         return $this;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \LwcCmsContent\Model\ContentEntityInterface::getArrayCopy()
+     */
+    public function getArrayCopy()
+    {
+        return array(
+            'row_id' => $this->getRowId(),
+            'type_id' => $this->getTypeId(),
+            'position' => $this->getPosition(),
+            'visible' => $this->getVisible(),
+            'weight' => $this->getWeight(),
+            'bodycopy' => $this->getBodycopy()
+        );
     }
 }
