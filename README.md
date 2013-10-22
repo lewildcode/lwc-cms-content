@@ -116,6 +116,15 @@ class ContentSpokesperson extends AbstractHelper implements RendererInterface
 ```
 The getViewModel() method is not needed, but it makes the file a bit cleaner / extendable (imho).
 
+#### Adding the view script (ViewModel) ####
+Create a <b>view/acme-module/content</b> directory and put a spokesperson.phtml in there, like so:
+```php
+
+<div class="foobar">
+<?php echo $this->escapehtml($person->getXYZ()); // use any methods from your model class here. ?>
+</div>
+```
+
 #### Adding the ViewModel and the ViewHelper to your config ####
 ```php
 <?php
