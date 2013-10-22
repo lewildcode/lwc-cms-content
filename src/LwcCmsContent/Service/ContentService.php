@@ -5,6 +5,7 @@ use LwcCmsPage\Entity\RowEntityInterface;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Stdlib\Hydrator\HydratorInterface;
+use LwcCmsContent\Model\ContentEntityInterface;
 
 class ContentService
 {
@@ -193,5 +194,27 @@ class ContentService
             $contents[] = $hydrator->hydrate($contentArray, new $className());
         }
         return $contents;
+    }
+
+    /**
+     *
+     * @param ContentEntityInterface $content
+     * @return integer
+     */
+    public function save(ContentEntityInterface $content)
+    {
+        $table = $this->getTable('cms_content');
+        $data = array(
+            'row_id' => $content->getRowId(),
+            'type_id' => $content->getTypeId(),
+            'position' => $content->getPosition(),
+            'visible' => $content->getVisible(),
+            'weight' => $content->getWeight(),
+            'bodycopy' => $content->getBodycopy()
+        );
+        if ($id = $content->getId()) {
+            return $table->update($data, 'id = ' . (int) $id);
+        }
+        return $table->insert($data);
     }
 }

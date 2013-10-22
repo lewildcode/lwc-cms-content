@@ -74,12 +74,24 @@ abstract class AbstractContentEntity implements ContentEntityInterface
     }
 
     /**
+     * (non-PHPdoc)
      *
-     * @return integer
+     * @see \LwcCmsContent\Model\ContentEntityInterface::getRowId()
      */
     public function getRowId()
     {
         return $this->rowId;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \LwcCmsContent\Model\ContentEntityInterface::setRowId()
+     */
+    public function setRowId($rowId)
+    {
+        $this->rowId = (int) $rowId;
+        return $this;
     }
 
     /**
@@ -104,8 +116,9 @@ abstract class AbstractContentEntity implements ContentEntityInterface
     }
 
     /**
+     * (non-PHPdoc)
      *
-     * @return boolean
+     * @see \LwcCmsContent\Model\ContentEntityInterface::getVisible()
      */
     public function getVisible()
     {
@@ -113,9 +126,9 @@ abstract class AbstractContentEntity implements ContentEntityInterface
     }
 
     /**
+     * (non-PHPdoc)
      *
-     * @param boolean $visible
-     * @return \LwcCmsContent\Model\AbstractContentEntity
+     * @see \LwcCmsContent\Model\ContentEntityInterface::setVisible()
      */
     public function setVisible($visible)
     {

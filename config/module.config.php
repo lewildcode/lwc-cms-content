@@ -1,5 +1,28 @@
 <?php
 return array(
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'lwccmscontent_create' => array(
+                    'options' => array(
+                        'route' => 'create content <row> <type> [--weight=] [--visible=] [--specs=]',
+                        'defaults' => array(
+                            'controller' => 'LwcCmsContent\Controller\Cli',
+                            'action' => 'create',
+                            'visible' => true,
+                            'weight' => 12,
+                            'specs' => array()
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    'controllers' => array(
+        'invokables' => array(
+            'LwcCmsContent\Controller\Cli' => 'LwcCmsContent\Controller\CliController'
+        )
+    ),
     'service_manager' => array(
         'aliases' => array(
             'LwcCmsContent\DbAdapter' => 'dbAdapter'

@@ -53,7 +53,30 @@ interface ContentEntityInterface
     public function setBodycopy($bodycopy);
 
     /**
+     *
      * @return string
      */
     public function getTypeId();
+
+    /**
+     *
+     * @return integer
+     */
+    public function getRowId();
+
+    /**
+     *
+     * @param integer $rowId
+     */
+    public function setRowId($rowId);
+
+    /**
+     * @return boolean
+     */
+    public function getVisible();
+
+    /**
+     * @param boolean $visible
+     */
+    public function setVisible($visible);
 }

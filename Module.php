@@ -3,9 +3,23 @@ namespace LwcCmsContent;
 
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\Console\Adapter\AdapterInterface;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 
-class Module implements ConfigProviderInterface, AutoloaderProviderInterface
+class Module implements ConfigProviderInterface, AutoloaderProviderInterface, ConsoleUsageProviderInterface
 {
+
+    /**
+     *
+     * @param AdapterInterface $console
+     * @return multitype:string
+     */
+    public function getConsoleUsage(AdapterInterface $console)
+    {
+        return array(
+            'create content <row> <type> [--weight=] [--visible=] [--specs=]' => 'Create content'
+        );
+    }
 
     /**
      * (non-PHPdoc)
