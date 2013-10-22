@@ -1,0 +1,14 @@
+<?php
+$classes = array($list->getWeight() . 'u');
+if($dlClasses = $list->getDlClass()) {
+    $classes[] = $dlClasses;
+}
+?>
+<dl class="<?php echo join(' ', $classes); ?>">
+    <?php foreach($list->getDefinitions() as $definition) : ?>
+        <dt><?php echo $this->escapehtml($definition->getTerm()); ?></dt>
+        <?php foreach($definition->getDescriptions() as $description) : ?>
+            <dd><?php echo $this->escapehtml($description);?></dd>
+        <?php endforeach;?>
+    <?php endforeach; ?>
+</dl>

@@ -18,7 +18,8 @@ return array(
 
             // core content type view helpers
             'contentArticle' => 'LwcCmsContent\View\Helper\Article',
-            'contentSection' => 'LwcCmsContent\View\Helper\Section'
+            'contentSection' => 'LwcCmsContent\View\Helper\Section',
+            'contentDefinitionList' => 'LwcCmsContent\View\Helper\DefinitionList'
         ),
         'factories' => array(
             'contentRenderer' => 'LwcCmsContent\View\Helper\RendererFactory'
@@ -37,6 +38,7 @@ return array(
             // core content type templates
             'content/article' => __DIR__ . '/../view/lwc-cms-content/content/article.phtml',
             'content/section' => __DIR__ . '/../view/lwc-cms-content/content/section.phtml',
+            'content/definitionlist' => __DIR__ . '/../view/lwc-cms-content/content/definitionlist.phtml',
         )
     )
 );

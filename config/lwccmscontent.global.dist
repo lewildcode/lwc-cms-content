@@ -14,6 +14,10 @@ return array(
             'lwc_section' => array(
                 'class_name' => 'LwcCmsContent\Type\Section',
                 'view_helper' => 'contentSection'
+            ),
+            'lwc_definitionlist' => array(
+                'class_name' => 'LwcCmsContent\Type\DefinitionList',
+                'view_helper' => 'contentDefinitionList'
             )
         )
     )
