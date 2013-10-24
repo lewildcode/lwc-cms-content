@@ -49,6 +49,7 @@ return array(
             'contentBodycopy' => 'LwcCmsContent\View\Helper\Bodycopy',
 
             // core content type view helpers
+            'contentRawHtml' => 'LwcCmsContent\View\Helper\RawHtml',
             'contentArticle' => 'LwcCmsContent\View\Helper\Article',
             'contentSection' => 'LwcCmsContent\View\Helper\Section',
             'contentDefinitionList' => 'LwcCmsContent\View\Helper\DefinitionList'
@@ -66,6 +67,7 @@ return array(
             'content/header' => __DIR__ . '/../view/lwc-cms-content/content/header.phtml',
             'content/image' => __DIR__ . '/../view/lwc-cms-content/content/image.phtml',
             'content/bodycopy' => __DIR__ . '/../view/lwc-cms-content/content/bodycopy.phtml',
+            'content/rawhtml' => __DIR__ . '/../view/lwc-cms-content/content/rawhtml.phtml',
 
             // core content type templates
             'content/article' => __DIR__ . '/../view/lwc-cms-content/content/article.phtml',

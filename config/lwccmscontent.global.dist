@@ -18,6 +18,10 @@ return array(
             'lwc_definitionlist' => array(
                 'class_name' => 'LwcCmsContent\Type\DefinitionList',
                 'view_helper' => 'contentDefinitionList'
+            ),
+            'lwc_rawhtml' => array(
+                'class_name' => 'LwcCmsContent\Type\RawHtml',
+                'view_helper' => 'contentRawHtml'
             )
         )
     )
