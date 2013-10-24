@@ -5,7 +5,7 @@ return array(
             'routes' => array(
                 'lwccmscontent_create' => array(
                     'options' => array(
-                        'route' => 'create content <row> <type> [--weight=] [--visible=] [--specs=]',
+                        'route' => 'cms create content <row> <type> [--weight=] [--visible=] [--specs=]',
                         'defaults' => array(
                             'controller' => 'LwcCmsContent\Controller\Cli',
                             'action' => 'create',
@@ -17,10 +17,19 @@ return array(
                 ),
                 'lwccmscontent_update' => array(
                     'options' => array(
-                        'route' => 'update content <id> --specs=',
+                        'route' => 'cms update content <id> --specs=',
                         'defaults' => array(
                             'controller' => 'LwcCmsContent\Controller\Cli',
                             'action' => 'update'
+                        )
+                    )
+                ),
+                'lwccmscontent_showtypes' => array(
+                    'options' => array(
+                        'route' => 'cms content types',
+                        'defaults' => array(
+                            'controller' => 'LwcCmsContent\Controller\Cli',
+                            'action' => 'showtypes'
                         )
                     )
                 )

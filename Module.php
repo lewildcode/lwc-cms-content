@@ -17,8 +17,9 @@ class Module implements ConfigProviderInterface, AutoloaderProviderInterface, Co
     public function getConsoleUsage(AdapterInterface $console)
     {
         return array(
-            'create content <row> <type> [--weight=] [--visible=] [--specs=]' => 'Create content',
-            'update content <id> --specs=' => 'Update content'
+            'cms create content <row> <type> [--weight=] [--visible=] [--specs=]' => 'Create content',
+            'cms update content <id> --specs=' => 'Update content',
+            'cms content types' => 'Show Content types'
         );
     }
 
