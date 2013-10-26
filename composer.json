@@ -1,6 +1,6 @@
 {
-	"name" : "lwc/LwcCmsPage",
-	"description" : "ZF2 module for CMS pages (nested set)",
+	"name" : "lwc/LwcCmsContent",
+	"description" : "ZF2 module for CMS content via LwcCmsPage module",
 	"authors" : [{
 			"name" : "Timo Ziemann",
 			"email" : "info@mehrweb.de",
@@ -9,7 +9,7 @@
 	],
 	"keywords" : [
 		"cms",
-		"cms pages",
-		"nested set"
+		"cms content",
+		"content types"
 	]
 }
