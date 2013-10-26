@@ -1,5 +1,5 @@
 {
-	"name" : "lwc/Lwc-cms-content",
+	"name" : "lwc/lwc-cms-content",
 	"description" : "ZF2 module for CMS content via LwcCmsPage module",
 	"authors" : [{
 			"name" : "Timo Ziemann",
