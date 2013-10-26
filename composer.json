@@ -1,10 +1,10 @@
 {
-	"name" : "lwc/LwcCmsContent",
+	"name" : "lwc/Lwc-cms-content",
 	"description" : "ZF2 module for CMS content via LwcCmsPage module",
 	"authors" : [{
 			"name" : "Timo Ziemann",
 			"email" : "info@mehrweb.de",
-			"homepage" : "www.mehrweb.de"
+			"homepage" : "http://www.mehrweb.de"
 		}
 	],
 	"keywords" : [
