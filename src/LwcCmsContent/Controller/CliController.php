@@ -17,9 +17,18 @@ class CliController extends AbstractActionController
         return $this->getServiceLocator()->get('LwcCmsContent\Service\Content');
     }
 
+    /**
+     *
+     * @return \LwcCmsContent\Service\TypeService
+     */
+    protected function getTypeService()
+    {
+        return $this->getServiceLocator()->get('LwcCmsContent\Service\Type');
+    }
+
     public function showTypesAction()
     {
-        $types = $this->getContentService()->getTypes();
+        $types = $this->getTypeService()->getTypes();
         foreach ($types as $type => $specs) {
             echo $type . ' => ' . $specs['class_name'] . "\n";
         }
@@ -29,58 +38,54 @@ class CliController extends AbstractActionController
     public function createAction()
     {
         $type = $this->params('type');
-        $service = $this->getContentService();
+        $service = $this->getTypeService();
+        $specs = $this->params('specs', array());
         
-        // valid
-        // content
-        // type?
         if (! $service->hasType($type)) {
             return $this->notFoundAction();
         }
-        // valid
-        // json?
-        try {
-            $specs = Json::decode($this->params('specs'), Json::TYPE_ARRAY);
-        } catch (\Exception $e) {
-            $viewModel = new ConsoleModel();
-            $viewModel->setResult('JSON decoding failed.');
-            return $viewModel;
+        
+        if (! empty($specs)) {
+            try {
+                $specs = Json::decode($specs, Json::TYPE_ARRAY);
+            } catch (\Exception $e) {
+                $viewModel = new ConsoleModel();
+                $viewModel->setResult('JSON decoding failed.');
+                return $viewModel;
+            }
         }
         
-        $className = $service->getTypeClassName($type);
+        $className = $service->getClassName($type);
         $instance = new $className();
         $instance->setRowId((int) $this->params('row'));
         $instance->setWeight((int) $this->params('weight'));
-        $service->getHydrator()->hydrate($specs, $instance);
         
-        $service->save($instance);
+        $contentService = $this->getContentService();
+        $contentService->getHydrator()->hydrate($specs, $instance);
+        $contentService->save($instance);
     }
 
     public function updateAction()
     {
         $service = $this->getContentService();
         $cmsObject = $service->getContentById($this->params('id'));
+        $specs = $this->params('specs', array());
         
-        // content
-        // not
-        // found
         if (! $cmsObject) {
             return $this->notFoundAction();
         }
-        
-        // valid
-        // json?
-        try {
-            $specs = Json::decode($this->params('specs'), Json::TYPE_ARRAY);
-        } catch (\Exception $e) {
-            $viewModel = new ConsoleModel();
-            $viewModel->setResult('JSON decoding failed.');
-            return $viewModel;
+        if (! empty($specs)) {
+            try {
+                $specs = Json::decode($specs, Json::TYPE_ARRAY);
+            } catch (\Exception $e) {
+                $viewModel = new ConsoleModel();
+                $viewModel->setResult('JSON decoding failed.');
+                return $viewModel;
+            }
         }
         
         $instance = $service->getContentByCmsObject($cmsObject);
         $service->getHydrator()->hydrate($specs, $instance);
-        
         $service->save($instance);
     }
 }

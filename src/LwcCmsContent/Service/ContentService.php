@@ -22,75 +22,44 @@ class ContentService
      * @var HydratorInterface
      */
     protected $hydrator;
-
+    
     /**
-     *
-     * @var array
+     * 
+     * @var TypeService
      */
-    protected $types = array();
-
+    protected $typeService;
+    
     /**
-     *
-     * @return array
+     * 
+     * @param TypeService $typeService
      */
-    public function getTypes()
+    public function __construct(TypeService $typeService)
     {
-        return $this->types;
+        $this->setTypeService($typeService);
     }
-
+    
     /**
-     *
-     * @param string $identifier
-     * @return boolean
-     */
-    public function hasType($identifier)
-    {
-        return isset($this->types[trim($identifier)]);
-    }
-
-    /**
-     *
-     * @param string $identifier
-     * @return boolean
-     *         string
-     */
-    public function getTypeClassName($identifier)
-    {
-        if (! $this->hasType($identifier)) {
-            return false;
-        }
-        return $this->types[$identifier]['class_name'];
-    }
-
-    /**
-     *
-     * @param array $types
+     * 
+     * @param TypeService $service
      * @return \LwcCmsContent\Service\ContentService
      */
-    public function setTypes(array $types)
+    public function setTypeService(TypeService $service)
     {
-        $this->types = array();
-        foreach ($types as $identifier => $specs) {
-            $this->addType($identifier, $specs);
-        }
+        $this->typeService = $service;
         return $this;
     }
-
+    
     /**
-     *
-     * @param string $identifier
-     * @param array $specs
-     * @return \LwcCmsContent\Service\ContentService
+     * @return TypeService
      */
-    public function addType($identifier, array $specs)
+    public function getTypeService()
     {
-        $this->types[trim($identifier)] = $specs;
-        return $this;
+        return $this->typeService;
     }
 
     /**
      *
-     * @param string $name
+     * @param string $name            
      * @return TableGateway
      */
     public function getTable($name)
@@ -103,7 +72,7 @@ class ContentService
 
     /**
      *
-     * @param TableGateway $table
+     * @param TableGateway $table            
      * @return \LwcCmsContent\Service\ContentService
      */
     public function addTable(TableGateway $table)
@@ -123,7 +92,7 @@ class ContentService
 
     /**
      *
-     * @param HydratorInterface $hydrator
+     * @param HydratorInterface $hydrator            
      * @return \LwcCmsContent\Service\ContentService
      */
     public function setHydrator(HydratorInterface $hydrator)
@@ -134,7 +103,7 @@ class ContentService
 
     /**
      *
-     * @param string $type
+     * @param string $type            
      * @return string
      */
     protected function getTypeTableName($type)
@@ -144,8 +113,8 @@ class ContentService
 
     /**
      *
-     * @param string $type
-     * @param Adapter $dbAdapter
+     * @param string $type            
+     * @param Adapter $dbAdapter            
      * @return \Zend\Db\TableGateway\TableGateway
      */
     protected function getTypeTableGateway($type, Adapter $dbAdapter)
@@ -156,8 +125,8 @@ class ContentService
 
     /**
      *
-     * @param \ArrayObject $cms
-     * @param \ArrayObject|false $typeData
+     * @param \ArrayObject $cms            
+     * @param \ArrayObject|false $typeData            
      * @return array
      */
     protected function getContentArray(\ArrayObject $cms, $typeData)
@@ -179,26 +148,26 @@ class ContentService
 
     /**
      *
-     * @param RowEntityInterface $row
+     * @param RowEntityInterface $row            
      * @return \Zend\Db\ResultSet\ResultSet
      */
     public function getContentsForRow(RowEntityInterface $row)
     {
         $cms = $this->getTable('cms_content');
         $dbAdapter = $this->getCmsAdapter();
-
+        
         $contents = array();
         $hydrator = $this->getHydrator();
         foreach ($cms->getContentsByRowId($row->getId()) as $arrayObject) {
             $type = $arrayObject['type_id'];
-            $className = $this->getTypeClassName($type);
+            $className = $this->getTypeService()->getClassName($type);
             if ($className === false) {
                 throw new \Exception('Could not resolve content type: ' . $type);
             }
-
+            
             $tableGateway = $this->getTypeTableGateway($type, $dbAdapter);
             $this->addTable($tableGateway);
-
+            
             $type = $tableGateway->select('content_id = ' . (int) $arrayObject['id'])->current();
             $contentArray = $this->getContentArray($arrayObject, $type);
             $contents[] = $hydrator->hydrate($contentArray, new $className());
@@ -208,38 +177,40 @@ class ContentService
 
     /**
      *
-     * @param integer $id
+     * @param integer $id            
      * @return ContentEntityInterface
      */
     public function getContentById($id)
     {
         $table = $this->getTable('cms_content');
-        // TODO join
+        // TODO
+        // join
         return $table->select('id = ' . (int) $id)->current();
     }
 
     /**
      *
-     * @param \ArrayObject $arrayObject
-     * @return boolean|AbstractContentEntity
+     * @param \ArrayObject $arrayObject            
+     * @return boolean AbstractContentEntity
      */
     public function getContentByCmsObject(\ArrayObject $arrayObject)
     {
         $type = $arrayObject['type_id'];
-        if(!$this->hasType($type)) {
+        $typeService = $this->getTypeService();
+        if (!$typeService->hasType($type)) {
             return false;
         }
         $cmsId = $arrayObject['id'];
         $table = $this->getTypeTableGateway($type, $this->getCmsAdapter());
         $typedContent = $table->select('content_id = ' . $cmsId)->current();
         $contentArray = $this->getContentArray($arrayObject, $typedContent);
-        $className = $this->getTypeClassName($type);
+        $className = $typeService->getClassName($type);
         return $this->getHydrator()->hydrate($contentArray, new $className());
     }
 
     /**
      *
-     * @param ContentEntityInterface $content
+     * @param ContentEntityInterface $content            
      * @return integer
      */
     public function save(ContentEntityInterface $content)

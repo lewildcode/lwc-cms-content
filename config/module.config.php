@@ -47,7 +47,8 @@ return array(
         ),
         'factories' => array(
             'LwcCmsContent\Table\Content' => 'LwcCmsContent\Table\ContentTableFactory',
-            'LwcCmsContent\Service\Content' => 'LwcCmsContent\Service\ContentServiceFactory'
+            'LwcCmsContent\Service\Content' => 'LwcCmsContent\Service\ContentServiceFactory',
+            'LwcCmsContent\Service\Type' => 'LwcCmsContent\Service\TypeServiceFactory'
         )
     ),
     'view_helpers' => array(
@@ -56,8 +57,7 @@ return array(
             'contentHeader' => 'LwcCmsContent\View\Helper\Header',
             'contentImage' => 'LwcCmsContent\View\Helper\Image',
             'contentBodycopy' => 'LwcCmsContent\View\Helper\Bodycopy',
-
-            // core content type view helpers
+            'contentHtmlList' => 'LwcCmsContent\View\Helper\HtmlList',
             'contentRawHtml' => 'LwcCmsContent\View\Helper\RawHtml',
             'contentArticle' => 'LwcCmsContent\View\Helper\Article',
             'contentSection' => 'LwcCmsContent\View\Helper\Section',
@@ -77,8 +77,7 @@ return array(
             'content/image' => __DIR__ . '/../view/lwc-cms-content/content/image.phtml',
             'content/bodycopy' => __DIR__ . '/../view/lwc-cms-content/content/bodycopy.phtml',
             'content/rawhtml' => __DIR__ . '/../view/lwc-cms-content/content/rawhtml.phtml',
-
-            // core content type templates
+            'content/htmllist' => __DIR__ . '/../view/lwc-cms-content/content/htmllist.phtml',
             'content/article' => __DIR__ . '/../view/lwc-cms-content/content/article.phtml',
             'content/section' => __DIR__ . '/../view/lwc-cms-content/content/section.phtml',
             'content/definitionlist' => __DIR__ . '/../view/lwc-cms-content/content/definitionlist.phtml',

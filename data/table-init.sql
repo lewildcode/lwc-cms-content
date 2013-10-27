@@ -61,3 +61,14 @@ CREATE TABLE `cms_content_lwc_definitionlist` (
   KEY `content_id` (`content_id`),
   CONSTRAINT `cms_content_lwc_definitionlist_ibfk_1` FOREIGN KEY (`content_id`) REFERENCES `cms_content` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `cms_content_lwc_htmllist` (
+  `lwc_bodycopy_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `content_id` int(11) unsigned NOT NULL,
+  `ordered` tinyint(1) DEFAULT '0',
+  `list_class` varchar(50) DEFAULT NULL,
+  `items` text,
+  PRIMARY KEY (`lwc_bodycopy_id`),
+  KEY `content_id` (`content_id`),
+  CONSTRAINT `cms_content_lwc_htmllist_ibfk_1` FOREIGN KEY (`content_id`) REFERENCES `cms_content` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

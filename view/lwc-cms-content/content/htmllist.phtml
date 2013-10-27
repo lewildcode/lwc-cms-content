@@ -1,0 +1,5 @@
+<div class="<?php echo $list->getWeight() . 'u'; ?>">
+    <?php echo $this->htmllist($list->getItems(), $list->getOrdered(), array(
+        'class' => $list->getListClass()
+    )); ?>
+</div>

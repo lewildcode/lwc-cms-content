@@ -15,12 +15,10 @@ class ContentServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $config = $serviceLocator->get('Config');
-
-        $service = new ContentService();
+        $typeService = $serviceLocator->get('LwcCmsContent\Service\Type');
+        $service = new ContentService($typeService);
         $service->setHydrator(new ClassMethods());
         $service->addTable($serviceLocator->get('LwcCmsContent\Table\Content'));
-        $service->setTypes($config['lwccmscontent']['types']);
         return $service;
     }
 }
