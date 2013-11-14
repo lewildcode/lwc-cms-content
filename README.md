@@ -2,40 +2,10 @@ LwcCmsContent
 =============
 
 ### Composer ###
-Add the repository to your composer.json:
-
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "lwc/LwcCmsPage",
-                "version": "1.0.0",
-                "source": {
-                    "url": "http://github.com/lewildcode/LwcCmsPage",
-                    "type": "git",
-                    "reference": "master"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "lwc/LwcCmsContent",
-                "version": "1.0.0",
-                "source": {
-                    "url": "http://github.com/lewildcode/LwcCmsContent",
-                    "type": "git",
-                    "reference": "master"
-                }
-            }
-        }
-    ],
-
-then add the page & content package to the require block
 
     "require": {
-        "lwc/LwcCmsPage": "1.*", /* if not added yet */
-        "lwc/LwcCmsContent": "1.*"
+        "lwc/lwccmspage": "1.*", /* if not added yet */
+        "lwc/lwccmscontent": "1.*"
     }
 
 ### ZF2 config setup ###
