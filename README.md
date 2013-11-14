@@ -40,7 +40,6 @@ then add the page & content package to the require block
 
 ### ZF2 config setup ###
 * Add the "LwcCmsContent" module to your <b>config/application.config.php</b> file
-* Copy the <b>config/lwccmscontent.global.dist</b> file to your config/autoload/ directory, replace the .dist with ".php"
 
 ### Database setup ###
 * <b>Warning:</b> Make sure to setup the LwcCmsPage module first!

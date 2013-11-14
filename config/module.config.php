@@ -1,5 +1,50 @@
 <?php
+$settings = array(
+    'contenttable' => 'cms_content',
+    'types' => array(
+        'lwc_bodycopy' => array(
+            'class_name' => 'LwcCmsContent\Type\Bodycopy',
+            'view_helper' => 'contentBodycopy'
+        ),
+        'lwc_article' => array(
+            'class_name' => 'LwcCmsContent\Type\Article',
+            'view_helper' => 'contentArticle'
+        ),
+        'lwc_section' => array(
+            'class_name' => 'LwcCmsContent\Type\Section',
+            'view_helper' => 'contentSection'
+        ),
+        'lwc_definitionlist' => array(
+            'class_name' => 'LwcCmsContent\Type\DefinitionList',
+            'view_helper' => 'contentDefinitionList'
+        ),
+        'lwc_rawhtml' => array(
+            'class_name' => 'LwcCmsContent\Type\RawHtml',
+            'view_helper' => 'contentRawHtml'
+        )
+    )
+);
+
 return array(
+    'lwccmscontent' => $settings,
+    'router' => array(
+        'routes' => array(
+            'zfcadmin' => array(
+                'child_routes' => array(
+                    'lwccmscontent' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/content[/:action][/:id]',
+                            'defaults' => array(
+                                'controller' => 'LwcCmsContent\Controller\Admin',
+                                'action' => 'index'
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
     'console' => array(
         'router' => array(
             'routes' => array(
@@ -36,9 +81,19 @@ return array(
             )
         )
     ),
+    'navigation' => array(
+        'admin' => array(
+            'contents' => array(
+                'type' => 'mvc',
+                'route' => 'zfcadmin/lwccmscontent',
+                'label' => 'Content'
+            )
+        )
+    ),
     'controllers' => array(
         'invokables' => array(
-            'LwcCmsContent\Controller\Cli' => 'LwcCmsContent\Controller\CliController'
+            'LwcCmsContent\Controller\Cli' => 'LwcCmsContent\Controller\CliController',
+            'LwcCmsContent\Controller\Admin' => 'LwcCmsContent\Controller\AdminController'
         )
     ),
     'service_manager' => array(
@@ -53,7 +108,9 @@ return array(
     ),
     'view_helpers' => array(
         'invokables' => array(
-            // basic view helpers
+            // basic
+            // view
+            // helpers
             'contentHeader' => 'LwcCmsContent\View\Helper\Header',
             'contentImage' => 'LwcCmsContent\View\Helper\Image',
             'contentBodycopy' => 'LwcCmsContent\View\Helper\Bodycopy',
@@ -80,7 +137,7 @@ return array(
             'content/htmllist' => __DIR__ . '/../view/lwc-cms-content/content/htmllist.phtml',
             'content/article' => __DIR__ . '/../view/lwc-cms-content/content/article.phtml',
             'content/section' => __DIR__ . '/../view/lwc-cms-content/content/section.phtml',
-            'content/definitionlist' => __DIR__ . '/../view/lwc-cms-content/content/definitionlist.phtml',
+            'content/definitionlist' => __DIR__ . '/../view/lwc-cms-content/content/definitionlist.phtml'
         )
     )
 );

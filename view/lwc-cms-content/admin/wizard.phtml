@@ -1,0 +1,11 @@
+<h1>Content Wizard</h1>
+<form method="post">
+    <div class="form-group">
+        <label>Type</label> <select name="type" size="1"
+            class="form-control" required>
+        <?php foreach($types as $identifier => $specs) : ?>
+            <option value="<?php echo $identifier; ?>"><?php echo $specs['class_name']; ?></option>
+        <?php endforeach; ?>
+    </select>
+    </div>
+</form>
