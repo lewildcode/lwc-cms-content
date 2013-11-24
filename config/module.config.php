@@ -103,14 +103,13 @@ return array(
         'factories' => array(
             'LwcCmsContent\Table\Content' => 'LwcCmsContent\Table\ContentTableFactory',
             'LwcCmsContent\Service\Content' => 'LwcCmsContent\Service\ContentServiceFactory',
-            'LwcCmsContent\Service\Type' => 'LwcCmsContent\Service\TypeServiceFactory'
+            'LwcCmsContent\Service\Type' => 'LwcCmsContent\Service\TypeServiceFactory',
+            'LwcCmsContent\Form\Bodycopy' => 'LwcCmsContent\Form\BodycopyFactory',
+            'LwcCmsContent\Form\ContentType' => 'LwcCmsContent\Form\ContentTypeFactory',
         )
     ),
     'view_helpers' => array(
         'invokables' => array(
-            // basic
-            // view
-            // helpers
             'contentHeader' => 'LwcCmsContent\View\Helper\Header',
             'contentImage' => 'LwcCmsContent\View\Helper\Image',
             'contentBodycopy' => 'LwcCmsContent\View\Helper\Bodycopy',

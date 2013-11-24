@@ -27,6 +27,19 @@ class TypeService
     {
         return $this->types;
     }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getTypesKeyValue()
+    {
+        $types = array();
+        foreach($this->getTypes() as $type => $specs) {
+            $types[$type] = $specs['class_name'];
+        }
+        return $types;
+    }
 
     /**
      *

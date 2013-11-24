@@ -2,6 +2,7 @@
 namespace LwcCmsContent\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use LwcCmsContent\Form\Bodycopy;
 
 class AdminController extends AbstractActionController
 {
@@ -29,8 +30,18 @@ class AdminController extends AbstractActionController
 
     public function wizardAction()
     {
+        $form = $this->getServiceLocator()->get('LwcCmsContent\Form\Bodycopy');
+        
+        if($this->getRequest()->isPost()) {
+            $form->setData($this->getRequest()->getPost());
+            if($form->isValid()) {
+                var_dump($form->getData());
+                exit;
+            }
+        }
         return array(
-            'types' => $this->getTypeService()->getTypes()
+            'typeForm' => $this->getServiceLocator()->get('LwcCmsContent\Form\ContentType'),
+            'form' => $form,
         );
     }
 }
