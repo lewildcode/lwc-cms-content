@@ -67,10 +67,11 @@ class AdminController extends AbstractActionController
         $formAlias = $typeService->getForm($type);
         $form = $this->getServiceLocator()->get($formAlias);
         
-        $base = $this->getContentService()->getContentById($id);
-        $content = $this->getContentService()->getContentByBaseObject($base);
-        
-        $form->bind($content);
+        if($id) {
+            $base = $this->getContentService()->getContentById($id);
+            $content = $this->getContentService()->getContentByBaseObject($base);
+            $form->bind($content);
+        }
         
         if($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
@@ -82,7 +83,10 @@ class AdminController extends AbstractActionController
             }
         }
         $view = new ViewModel();
-        $view->setVariable('form', $form);
+        $view->setVariables(array(
+            'form' => $form,
+            'type' => $type
+        ));
         if($this->getRequest()->isXmlHttpRequest()) {
             $view->setTerminal(true);
         }

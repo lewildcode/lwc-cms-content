@@ -18,7 +18,96 @@ class Article extends AbstractContentForm
         $this->add($this->getHeaderWeight());
         $this->add($this->getHeaderByline());
         $this->add($this->getHeaderLink());
+        $this->add($this->getImagePath());
+        $this->add($this->getImageTitle());
+        $this->add($this->getImageLink());
+        $this->add($this->getImageClasses());
         $this->add($this->getBody());
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function getImageTitle()
+    {
+        return array(
+            'name' => 'image_title',
+            'options' => array(
+                'label' => 'Image title',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                )
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'maxlength' => 100,
+            )
+        );
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function getImagePath()
+    {
+        return array(
+            'name' => 'image_path',
+            'options' => array(
+                'label' => 'Image path',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                )
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'maxlength' => 100,
+            )
+        );
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function getImageClasses()
+    {
+        return array(
+            'name' => 'image_classes',
+            'options' => array(
+                'label' => 'Image CSS classes',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                )
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'maxlength' => 50,
+            )
+        );
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function getImageLink()
+    {
+        return array(
+            'name' => 'image_link',
+            'options' => array(
+                'label' => 'Image link',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                )
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'type' => 'url',
+                'maxlength' => 100,
+            )
+        );
     }
     
     /**
