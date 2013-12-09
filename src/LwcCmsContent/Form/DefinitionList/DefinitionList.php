@@ -1,9 +1,9 @@
 <?php
-namespace LwcCmsContent\Form;
+namespace LwcCmsContent\Form\DefinitionList;
 
-use Zend\Form\Element\Button;
+use LwcCmsContent\Form\AbstractContentForm;
 
-class Bodycopy extends AbstractContentForm
+class DefinitionList extends AbstractContentForm
 {
 
     /**
@@ -15,29 +15,27 @@ class Bodycopy extends AbstractContentForm
     {
         parent::__construct($name, $options);
         
-        $this->add($this->getBodycopy());
-        $this->add($this->getSubmitElement(), array(
-            'priority' => - 100
-        ));
+        $this->add($this->getTermElement());
+        $this->add($this->getDescriptionElement());
     }
 
     /**
      *
      * @return array
      */
-    public function getBodycopy()
+    public function getTermElement()
     {
         return array(
-            'name' => 'bodycopy',
+            'name' => 'term',
+            'type' => 'text',
             'options' => array(
-                'label' => 'Content',
+                'label' => 'Term',
                 'label_attributes' => array(
                     'class' => 'control-label'
                 )
             ),
             'attributes' => array(
                 'required' => 'required',
-                'type' => 'textarea',
                 'class' => 'form-control'
             )
         );
@@ -47,14 +45,20 @@ class Bodycopy extends AbstractContentForm
      *
      * @return array
      */
-    public function getSubmitElement()
+    public function getDescriptionElement()
     {
         return array(
-            'name' => 'submit',
-            'type' => 'submit',
+            'name' => 'descriptions',
+            'type' => 'textarea',
+            'options' => array(
+                'label' => 'Description',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                )
+            ),
             'attributes' => array(
-                'value' => 'Submit',
-                'class' => 'btn btn-primary'
+                'required' => 'required',
+                'class' => 'form-control'
             )
         );
     }

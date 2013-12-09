@@ -4,18 +4,22 @@ $settings = array(
     'types' => array(
         'lwc_bodycopy' => array(
             'class_name' => 'LwcCmsContent\Type\Bodycopy',
-            'view_helper' => 'contentBodycopy'
+            'form' => 'LwcCmsContent\Form\Bodycopy',
+            'view_helper' => 'contentBodycopy',
         ),
         'lwc_article' => array(
             'class_name' => 'LwcCmsContent\Type\Article',
+            'form' => 'LwcCmsContent\Form\Article',
             'view_helper' => 'contentArticle'
         ),
         'lwc_section' => array(
             'class_name' => 'LwcCmsContent\Type\Section',
+            'form' => 'LwcCmsContent\Form\Section',
             'view_helper' => 'contentSection'
         ),
         'lwc_definitionlist' => array(
             'class_name' => 'LwcCmsContent\Type\DefinitionList',
+            'form' => 'LwcCmsContent\Form\DefinitionList',
             'view_helper' => 'contentDefinitionList'
         ),
         'lwc_rawhtml' => array(
@@ -34,10 +38,13 @@ return array(
                     'lwccmscontent' => array(
                         'type' => 'segment',
                         'options' => array(
-                            'route' => '/content[/:action][/:id]',
+                            'route' => '/content[/:action][/:id][/:type]',
                             'defaults' => array(
                                 'controller' => 'LwcCmsContent\Controller\Admin',
                                 'action' => 'index'
+                            ),
+                            'constraints' => array(
+                                'id' => '[0-9]+'
                             )
                         )
                     )
@@ -50,7 +57,7 @@ return array(
             'routes' => array(
                 'lwccmscontent_create' => array(
                     'options' => array(
-                        'route' => 'cms create content <row> <type> [--weight=] [--visible=] [--specs=]',
+                        'route' => 'cms create content <type> [--weight=] [--visible=] [--specs=]',
                         'defaults' => array(
                             'controller' => 'LwcCmsContent\Controller\Cli',
                             'action' => 'create',
@@ -104,7 +111,10 @@ return array(
             'LwcCmsContent\Table\Content' => 'LwcCmsContent\Table\ContentTableFactory',
             'LwcCmsContent\Service\Content' => 'LwcCmsContent\Service\ContentServiceFactory',
             'LwcCmsContent\Service\Type' => 'LwcCmsContent\Service\TypeServiceFactory',
-            'LwcCmsContent\Form\Bodycopy' => 'LwcCmsContent\Form\BodycopyFactory',
+            'LwcCmsContent\Form\Bodycopy' => 'LwcCmsContent\Form\Bodycopy\BodycopyFactory',
+            'LwcCmsContent\Form\Article' => 'LwcCmsContent\Form\Article\ArticleFactory',
+            'LwcCmsContent\Form\Section' => 'LwcCmsContent\Form\Section\SectionFactory',
+            'LwcCmsContent\Form\DefinitionList' => 'LwcCmsContent\Form\DefinitionList\DefinitionListFactory',
             'LwcCmsContent\Form\ContentType' => 'LwcCmsContent\Form\ContentTypeFactory',
         )
     ),

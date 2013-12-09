@@ -1,10 +1,11 @@
 <?php
-namespace LwcCmsContent\Form;
+namespace LwcCmsContent\Form\Section;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use LwcCmsContent\Filter\Section as SectionFilter;
 
-class BodycopyFactory implements FactoryInterface
+class SectionFactory implements FactoryInterface
 {
 
     /**
@@ -14,8 +15,8 @@ class BodycopyFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $form = new Bodycopy('bodycopy');
-        $filter = new BodycopyFilter();
+        $form = new Section('section');
+        $filter = new SectionFilter();
         $form->setInputFilter($filter);
         return $form;
     }

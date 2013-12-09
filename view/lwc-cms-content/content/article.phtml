@@ -5,6 +5,8 @@
     <?php if($article->getImagePath()) : ?>
         <?php echo $this->contentImage($article); ?>
     <?php endif; ?>
-    <p><?php echo $article->getBodycopy(); ?></p>
+    <?php if($body = $article->getBody()) : ?>
+        <p><?php echo $body; ?></p>
+    <?php endif; ?>
 </article>
 

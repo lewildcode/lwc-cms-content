@@ -44,4 +44,13 @@ class RawHtml extends AbstractContentEntity
         $this->html = trim($html);
         return $this;
     }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \LwcCmsContent\Model\AbstractContentEntity::__toString()
+     */
+    public function __toString()
+    {
+        return $this->getHtml();
+    }
 }

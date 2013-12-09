@@ -174,6 +174,13 @@ class ContentService
         }
         return $contents;
     }
+    
+    public function getContentsByType($type)
+    {
+        return $this->getTable('cms_content')->select(array(
+            'type_id = ?' => $type
+        ));
+    }
 
     /**
      *
@@ -182,10 +189,7 @@ class ContentService
      */
     public function getContentById($id)
     {
-        $table = $this->getTable('cms_content');
-        // TODO
-        // join
-        return $table->select('id = ' . (int) $id)->current();
+        return $this->getTable('cms_content')->select('id = ' . (int) $id)->current();
     }
 
     /**
@@ -193,7 +197,7 @@ class ContentService
      * @param \ArrayObject $arrayObject            
      * @return boolean AbstractContentEntity
      */
-    public function getContentByCmsObject(\ArrayObject $arrayObject)
+    public function getContentByBaseObject(\ArrayObject $arrayObject)
     {
         $type = $arrayObject['type_id'];
         $typeService = $this->getTypeService();

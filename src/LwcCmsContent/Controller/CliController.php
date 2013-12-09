@@ -57,7 +57,6 @@ class CliController extends AbstractActionController
         
         $className = $service->getClassName($type);
         $instance = new $className();
-        $instance->setRowId((int) $this->params('row'));
         $instance->setWeight((int) $this->params('weight'));
         
         $contentService = $this->getContentService();
@@ -84,7 +83,7 @@ class CliController extends AbstractActionController
             }
         }
         
-        $instance = $service->getContentByCmsObject($cmsObject);
+        $instance = $service->getContentByBaseObject($cmsObject);
         $service->getHydrator()->hydrate($specs, $instance);
         $service->save($instance);
     }

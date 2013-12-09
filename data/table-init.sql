@@ -1,15 +1,24 @@
 CREATE TABLE `cms_content` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `row_id` int(11) unsigned NOT NULL,
   `type_id` varchar(30) NOT NULL,
-  `position` smallint(4) DEFAULT NULL,
   `visible` tinyint(1) unsigned DEFAULT '1',
   `weight` tinyint(1) NOT NULL,
-  `bodycopy` text,
   PRIMARY KEY (`id`),
   KEY `row_id` (`row_id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `cms_content_ibfk_1` FOREIGN KEY (`row_id`) REFERENCES `cms_row` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `cms_row_content` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `row_id` int(11) unsigned DEFAULT NULL,
+  `content_id` int(11) unsigned DEFAULT NULL,
+  `position` smallint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `row_id` (`row_id`),
+  KEY `content_id` (`content_id`),
+  CONSTRAINT `cms_row_content_ibfk_2` FOREIGN KEY (`content_id`) REFERENCES `cms_content` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `cms_row_content_ibfk_1` FOREIGN KEY (`row_id`) REFERENCES `cms_row` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `cms_content_lwc_article` (
@@ -31,6 +40,7 @@ CREATE TABLE `cms_content_lwc_article` (
 CREATE TABLE `cms_content_lwc_bodycopy` (
   `lwc_bodycopy_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `content_id` int(11) unsigned NOT NULL,
+  `bodycopy` text,
   PRIMARY KEY (`lwc_bodycopy_id`),
   KEY `content_id` (`content_id`),
   CONSTRAINT `cms_content_lwc_bodycopy_ibfk_1` FOREIGN KEY (`content_id`) REFERENCES `cms_content` (`id`) ON DELETE CASCADE

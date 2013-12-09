@@ -16,10 +16,14 @@ class ContentType extends Form
         parent::__construct($name, $options);
         
         $this->add($this->getTypeElement());
+        $this->add($this->getPageElement());
         $this->add($this->getSubmitElement());
         
         if(isset($options['types'])) {
             $this->get('type')->setValueOptions($options['types']);
+        }
+        if(isset($options['pages'])) {
+            $this->get('page')->setValueOptions($options['pages']);
         }
     }
 
@@ -52,8 +56,29 @@ class ContentType extends Form
                 'label' => 'Type',
                 'label_attributes' => array(
                     'class' => 'control-label'
-                ),
-                'value_options' => array()
+                )
+            ),
+            'attributes' => array(
+                'required' => 'required',
+                'class' => 'form-control'
+            )
+        );
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function getPageElement()
+    {
+        return array(
+            'name' => 'page',
+            'type' => 'select',
+            'options' => array(
+                'label' => 'Page',
+                'label_attributes' => array(
+                    'class' => 'control-label'
+                )
             ),
             'attributes' => array(
                 'required' => 'required',

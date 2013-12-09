@@ -77,6 +77,19 @@ class TypeService
         }
         return $this->types[$type]['class_name'];
     }
+    
+    /**
+     * 
+     * @param string $type
+     * @return string
+     */
+    public function getForm($type)
+    {
+        if(!$this->hasType($type)) {
+            return false;
+        }
+        return $this->types[$type]['form'];
+    }
 
     /**
      *

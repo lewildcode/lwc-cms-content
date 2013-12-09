@@ -3,7 +3,11 @@ namespace LwcCmsContent\Model;
 
 interface ContentEntityInterface
 {
-
+    /**
+     * @return string
+     */
+    public function __toString();
+    
     /**
      *
      * @return integer
@@ -15,18 +19,6 @@ interface ContentEntityInterface
      * @param integer $id
      */
     public function setId($id);
-
-    /**
-     *
-     * @return integer
-     */
-    public function getPosition();
-
-    /**
-     *
-     * @param integer $position
-     */
-    public function setPosition($position);
 
     /**
      *
@@ -44,31 +36,7 @@ interface ContentEntityInterface
      *
      * @return string
      */
-    public function getBodycopy();
-
-    /**
-     *
-     * @param string $bodycopy
-     */
-    public function setBodycopy($bodycopy);
-
-    /**
-     *
-     * @return string
-     */
     public function getTypeId();
-
-    /**
-     *
-     * @return integer
-     */
-    public function getRowId();
-
-    /**
-     *
-     * @param integer $rowId
-     */
-    public function setRowId($rowId);
 
     /**
      * @return boolean

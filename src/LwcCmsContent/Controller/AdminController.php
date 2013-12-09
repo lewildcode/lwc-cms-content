@@ -3,6 +3,7 @@ namespace LwcCmsContent\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use LwcCmsContent\Form\Bodycopy;
+use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {
@@ -26,22 +27,65 @@ class AdminController extends AbstractActionController
     }
 
     public function indexAction()
-    {}
-
-    public function wizardAction()
     {
-        $form = $this->getServiceLocator()->get('LwcCmsContent\Form\Bodycopy');
+        $types = $this->getTypeService()->getTypes();
+        $contentService = $this->getContentService();
+        $viewData = array();
+        
+        foreach(array_keys($types) as $type) {
+            $numberOfItems = $contentService->getContentsByType($type)->count();
+            $viewData[$type] = $numberOfItems;
+        }
+        
+        return array(
+            'types' => $viewData
+        );
+    }
+    
+    public function listAction()
+    {
+        $type = $this->params('type');
+        $service = $this->getContentService();
+        $view = new ViewModel();
+        $view->setVariables(array(
+            'type' => $type,
+            'service' => $service,
+            'items' => $service->getContentsByType($type)
+        ));
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $view->setTerminal(true);
+        }
+        return $view;
+    }
+
+    public function formAction()
+    {
+        $type = $this->params('type');
+        $id = $this->params('id');
+        $typeService = $this->getTypeService();
+        
+        $formAlias = $typeService->getForm($type);
+        $form = $this->getServiceLocator()->get($formAlias);
+        
+        $base = $this->getContentService()->getContentById($id);
+        $content = $this->getContentService()->getContentByBaseObject($base);
+        
+        $form->bind($content);
         
         if($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost());
             if($form->isValid()) {
-                var_dump($form->getData());
-                exit;
+                return $this->redirect()->toRoute('zfcadmin/lwccmscontent', array(
+                    'action' => 'form',
+                    'id' => $id
+                ));
             }
         }
-        return array(
-            'typeForm' => $this->getServiceLocator()->get('LwcCmsContent\Form\ContentType'),
-            'form' => $form,
-        );
+        $view = new ViewModel();
+        $view->setVariable('form', $form);
+        if($this->getRequest()->isXmlHttpRequest()) {
+            $view->setTerminal(true);
+        }
+        return $view;
     }
 }

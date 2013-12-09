@@ -2,6 +2,9 @@
 namespace LwcCmsContent\Form;
 
 use Zend\Form\Form;
+use Zend\Form\Exception\InvalidArgumentException;
+use Zend\InputFilter\InputFilterInterface;
+use LwcCmsContent\Filter\AbstractContent;
 
 abstract class AbstractContentForm extends Form
 {
@@ -15,8 +18,38 @@ abstract class AbstractContentForm extends Form
     {
         parent::__construct($name, $options);
         
-        $this->add($this->getPosition());
         $this->add($this->getWeight());
+        $this->add($this->getSubmitElement(), array(
+            'priority' => - 100
+        ));
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \Zend\Form\Form::setInputFilter()
+     */
+    public function setInputFilter(InputFilterInterface $inputFilter)
+    {
+        if(!$inputFilter instanceof AbstractContent) {
+            throw new InvalidArgumentException('AbstractContent filter needed!');
+        }
+        return parent::setInputFilter($inputFilter);
+    }
+    
+    /**
+     *
+     * @return array
+     */
+    public function getSubmitElement()
+    {
+        return array(
+            'name' => 'submit',
+            'type' => 'submit',
+            'attributes' => array(
+                'value' => 'Submit',
+                'class' => 'btn btn-primary'
+            )
+        );
     }
 
     /**
@@ -39,27 +72,6 @@ abstract class AbstractContentForm extends Form
                 'min' => 1,
                 'max' => 12,
                 'required' => 'required',
-                'class' => 'form-control'
-            )
-        );
-    }
-
-    /**
-     *
-     * @return array
-     */
-    public function getPosition()
-    {
-        return array(
-            'name' => 'position',
-            'type' => 'number',
-            'options' => array(
-                'label' => 'Position',
-                'label_attributes' => array(
-                    'class' => 'control-label'
-                )
-            ),
-            'attributes' => array(
                 'class' => 'form-control'
             )
         );

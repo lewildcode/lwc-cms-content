@@ -5,5 +5,7 @@
     <?php if($section->getImagePath()) : ?>
         <?php echo $this->contentImage($section); ?>
     <?php endif; ?>
-    <p><?php echo $section->getBodycopy(); ?></p>
+    <?php if($body = $section->getBody()) : ?>
+        <p><?php echo $body; ?></p>
+    <?php endif; ?>
 </section>

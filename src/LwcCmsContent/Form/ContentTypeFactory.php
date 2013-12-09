@@ -16,7 +16,13 @@ class ContentTypeFactory implements FactoryInterface
     {
         $typeService = $serviceLocator->get('LwcCmsContent\Service\Type');
         return new ContentType('contentTypeSelection', array(
-            'types' => $typeService->getTypesKeyValue()
+            'types' => array_merge(
+                array('' => ''),
+                $typeService->getTypesKeyValue()
+            ),
+            'pages' => array(
+                1 => 'Asd'
+            )
         ));
     }
 }

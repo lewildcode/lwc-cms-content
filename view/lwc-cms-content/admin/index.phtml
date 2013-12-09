@@ -1,5 +1,41 @@
-<h1>Content</h1>
-<a href="<?php echo $this->url('zfcadmin/lwccmscontent', array('action' => 'wizard')); ?>" class="btn btn-primary">Start wizard</a>
+<?php $this->headscript()->captureStart(); ?>
+$(document).ready(function() {
+    var grid = $('#lwccmscontent-ajax-grid');
+    $(document).on('click', '.list-group-item a', function(event) {
+        event.preventDefault();
+        grid.html('loading ...');
+        $.get(event.target, function(response) {
+            grid.html(response);
+        });
+    });
+    $(document).on('click', '.btn-edit[href]', function(event) {
+        event.preventDefault();
+        grid.html('loading ...');
+        
+        $.get(event.target, function(response) {
+            grid.html(response);
+        });
+    });
+});
+<?php $this->headscript()->captureEnd(); ?>
 
-<table class="table">
-</table>
+<h1>Content</h1>
+<div class="row">
+    <div class="col-md-4">
+        <ul class="list-group">
+            <?php foreach($types as $key => $count) : ?>
+                <?php $url = $this->url('zfcadmin/lwccmscontent', array(
+                    'action'=>'list',
+                    'type' => $key
+                )); ?>
+                <li class="list-group-item">
+                    <a href="<?php echo $url; ?>"><?php echo $key; ?></a>
+                    <span class="badge"><?php echo $count; ?></span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+     <div class="col-md-8">
+        <div id="lwccmscontent-ajax-grid"></div>
+    </div>
+</div>

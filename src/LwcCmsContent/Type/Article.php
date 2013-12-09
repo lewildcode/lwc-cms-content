@@ -23,6 +23,32 @@ class Article extends AbstractContentEntity implements ImageAwareInterface, Head
     protected $image;
 
     /**
+     *
+     * @var string
+     */
+    protected $body;
+
+    /**
+     *
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     *
+     * @param string $body            
+     * @return \LwcCmsContent\Type\Article
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+        return $this;
+    }
+
+    /**
      * (non-PHPdoc)
      *
      * @see \LwcCmsContent\Model\ContentEntityInterface::getTypeId()
@@ -34,7 +60,7 @@ class Article extends AbstractContentEntity implements ImageAwareInterface, Head
 
     /**
      *
-     * @param Image $image
+     * @param Image $image            
      * @return \LwcCmsContent\Type\Article
      */
     public function setImage(Image $image)
@@ -49,7 +75,7 @@ class Article extends AbstractContentEntity implements ImageAwareInterface, Head
      */
     public function getImage()
     {
-        if($this->image == null) {
+        if ($this->image == null) {
             $this->setImage(new Image());
         }
         return $this->image;
@@ -57,7 +83,7 @@ class Article extends AbstractContentEntity implements ImageAwareInterface, Head
 
     /**
      *
-     * @param Header $header
+     * @param Header $header            
      * @return \LwcCmsContent\Type\Article
      */
     public function setHeader(Header $header)
@@ -72,7 +98,7 @@ class Article extends AbstractContentEntity implements ImageAwareInterface, Head
      */
     public function getHeader()
     {
-        if($this->header == null) {
+        if ($this->header == null) {
             $this->setHeader(new Header());
         }
         return $this->header;
@@ -244,5 +270,41 @@ class Article extends AbstractContentEntity implements ImageAwareInterface, Head
     {
         $this->getImage()->setLink($link);
         return $this;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \LwcCmsContent\Model\AbstractContentEntity::__toString()
+     */
+    public function __toString()
+    {
+        if($headerText = $this->getHeaderText()) {
+            if($headerByline = $this->getHeaderByline()) {
+                return $headerText . ', ' . $headerByline;
+            }
+            return $headerText;
+        }
+        if($body = $this->getBody()) {
+            return $body;
+        }
+        return parent::__toString();
+    }
+    
+    /**
+     * (non-PHPdoc)
+     * @see \LwcCmsContent\Model\AbstractContentEntity::getArrayCopy()
+     */
+    public function getArrayCopy()
+    {
+        return array_merge(
+            parent::getArrayCopy(),
+            array(
+                'header_text' => $this->getHeaderText(),
+                'header_weight' => $this->getHeaderWeight(),
+                'header_byline' => $this->getHeaderByline(),
+                'header_link' => $this->getHeaderLink(),
+                'body' => $this->getBody(),
+            )
+        );
     }
 }
